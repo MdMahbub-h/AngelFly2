@@ -62,7 +62,7 @@ function startPhaserGame() {
         physics: {
           default: "arcade",
           arcade: {
-            debug: true,
+            debug: false,
           },
         },
       });
@@ -1545,3 +1545,4 @@ function startPhaserGame() {
     return false;
   };
 }
+

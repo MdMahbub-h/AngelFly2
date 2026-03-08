@@ -45,7 +45,7 @@ export default class HomeScene extends Phaser.Scene {
 
     // Load saved background preference
     this.selectedBackground =
-      localStorage.getItem("selectedBackground") || "bg_default";
+      localStorage.getItem("selectedBackground") || "bg_3";
   }
 
   variables() {
@@ -108,7 +108,7 @@ export default class HomeScene extends Phaser.Scene {
 
   addBackground() {
     // Use the selected background or default
-    const bgKey = this.selectedBackground || "bg_default";
+    const bgKey = this.selectedBackground || "bg_3";
     this.gameBg = this.add
       .tileSprite(400, 700, 800, 1400, bgKey)
       .setDepth(2)

@@ -6,12 +6,12 @@ export default class ReplayScene extends Phaser.Scene {
   init(data) {
     this.score = data.score || 0;
     this.tempHighScore = data.highScore || 0;
-    this.selectedBackground = data.selectedBackground || "bg_default";
+    this.selectedBackground = data.selectedBackground || "bg_3";
   }
 
   create() {
     // Use the selected background
-    const bgKey = this.selectedBackground || "bg_default";
+    const bgKey = this.selectedBackground || "bg_3";
     this.background = this.add
       .image(400, 600, bgKey)
       .setScale(1)

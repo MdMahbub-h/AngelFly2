@@ -9,7 +9,7 @@ export default class Game extends Phaser.Scene {
     this.score = data.score || 0;
     this.highScore = data.highScore || 0;
     this.soundOn = data.soundOn !== false;
-    this.selectedBackground = data.selectedBackground || "bg_default";
+    this.selectedBackground = data.selectedBackground || "bg_3";
   }
 
   create() {
@@ -104,7 +104,7 @@ export default class Game extends Phaser.Scene {
   }
 
   addBackground() {
-    const bgKey = this.selectedBackground || "bg_default";
+    const bgKey = this.selectedBackground || "bg_3";
     this.gameBg = this.add
       .tileSprite(400, 700, 800, 1400, bgKey)
       .setDepth(2)

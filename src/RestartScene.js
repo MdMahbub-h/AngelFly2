@@ -6,12 +6,12 @@ export default class RestartScene extends Phaser.Scene {
   init(data) {
     this.score = data.score || 0;
     this.highScore = data.highScore || 0;
-    this.selectedBackground = data.selectedBackground || "bg_default";
+    this.selectedBackground = data.selectedBackground || "bg_3";
   }
 
   create() {
     // Use the selected background
-    const bgKey = this.selectedBackground || "bg_default";
+    const bgKey = this.selectedBackground || "bg_3";
     this.UIBackground2 = this.add.image(400, 700, bgKey).setScale(1.4);
 
     this.yourScore = this.add

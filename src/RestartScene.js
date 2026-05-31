@@ -13,19 +13,15 @@ export default class RestartScene extends Phaser.Scene {
     // Use the selected background
     const bgKey = this.selectedBackground || "bg_3";
     this.UIBackground2 = this.add.image(400, 700, bgKey).setAlpha(0.8);
+    this.yourScore = this.physics.add
+      .sprite(
+        400,
+        200,
+        this.score > this.tempHighScore ? "highScore" : "yourScore",
+      )
+      .setScale(1.15)
+      .setDepth(5);
 
-    this.yourScore = this.add
-      .text(400, 250, "YOUR SCORE", {
-        fontFamily: "MyLocalFont",
-        fontSize: "70px",
-        color: "#fff",
-        align: "center",
-        stroke: "#bf4b08",
-        strokeThickness: 10,
-      })
-      .setOrigin(0.5)
-      .setScrollFactor(0)
-      .setDepth(Infinity);
     this.scoreText = this.add
       .text(400, 450, this.score, {
         fontFamily: "MyLocalFont",
@@ -56,20 +52,13 @@ export default class RestartScene extends Phaser.Scene {
       .setScale(0.65);
     this.option1.setInteractive();
 
-    this.option1Text = this.add
-      .text(400, 840, "OR", {
-        fontFamily: "MyLocalFont",
-        fontSize: "70px",
-        color: "#fff",
-        align: "center",
-        stroke: "#bf4b08",
-        strokeThickness: 10,
-      })
-      .setOrigin(0.5)
-      .setDepth(6);
+    this.option1Text = this.physics.add
+      .sprite(400, 820, "or")
+      .setScale(0.9)
+      .setDepth(5);
 
     this.option2 = this.add
-      .image(400, 700, "restart")
+      .image(400, 730, "restart")
       .setDepth(5)
       .setScrollFactor(0)
       .setInteractive();

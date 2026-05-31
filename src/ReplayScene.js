@@ -41,23 +41,14 @@ export default class ReplayScene extends Phaser.Scene {
       });
     });
 
-    this.scoreTitle = this.add
-      .text(
+    this.scoreTitle = this.physics.add
+      .sprite(
         400,
-        170,
-        this.score > this.tempHighScore ? "New highscore" : "Your score",
-        {
-          fontFamily: "RakeslyRG",
-          fontSize: "40px",
-          color: "#000",
-          align: "center",
-          stroke: "#00139f",
-          strokeThickness: 1,
-        },
+        200,
+        this.score > this.tempHighScore ? "highScore" : "yourScore",
       )
-      .setOrigin(0.5)
-      .setScrollFactor(0)
-      .setDepth(Infinity);
+      .setScale(1.15)
+      .setDepth(5);
 
     this.scoreBox = this.add
       .rexRoundRectangle(400, 250, 300, 70, 20, 0x4e316e)

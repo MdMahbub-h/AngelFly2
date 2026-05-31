@@ -35,7 +35,6 @@ export default class Game extends Phaser.Scene {
 
     // Start the game directly
     this.variables();
-    this.createAnimations();
     this.addBackground();
     this.addSounds();
     this.addScores();
@@ -51,56 +50,6 @@ export default class Game extends Phaser.Scene {
     this.flames = this.physics.add.group();
     this.power = this.currentAngel;
     this.monsterCollide = false;
-  }
-
-  createAnimations() {
-    const ANIMATIONS = {
-      birdAnimation: { prefix: "b", frames: 2, fps: 15 },
-      a1Animation: { prefix: "a1", frames: 25 },
-      a2Animation: { prefix: "a2", frames: 28 },
-      a3Animation: { prefix: "a3", frames: 20 },
-      cloudAttack: { prefix: "cloudAttack", frames: 14 },
-      cloudReposo: { prefix: "cloudReposo", frames: 25 },
-      dove: { prefix: "dove", frames: 5 },
-      heart: { prefix: "heart", frames: 25 },
-      minotaurWalking: { prefix: "minotaurWalking", frames: 14 },
-      minotaurSmashing: { prefix: "minotaurSmashing", frames: 14 },
-      michaelAttack: { prefix: "michaelAttack", frames: 12 },
-      michaelDown: { prefix: "michaelDown", frames: 30 },
-      michaelLeft: { prefix: "michaelLeft", frames: 30 },
-      michaelRepose: { prefix: "michaelRepose", frames: 26 },
-      michaelRight: { prefix: "michaelRight", frames: 22 },
-      michaelUp: { prefix: "michaelUp", frames: 36 },
-      gabrielAttack: { prefix: "gabrielAttack", frames: 17 },
-      gabrielDown: { prefix: "gabrielDown", frames: 27 },
-      gabrielLeft: { prefix: "gabrielLeft", frames: 29 },
-      gabrielRepose: { prefix: "gabrielRepose", frames: 30 },
-      gabrielRight: { prefix: "gabrielRight", frames: 29 },
-      gabrielUp: { prefix: "gabrielUp", frames: 32 },
-      raphaelAttack: { prefix: "raphaelAttack", frames: 23 },
-      raphaelDown: { prefix: "raphaelDown", frames: 27 },
-      raphaelLeft: { prefix: "raphaelLeft", frames: 29 },
-      raphaelRepose: { prefix: "raphaelRepose", frames: 26 },
-      raphaelRight: { prefix: "raphaelRight", frames: 29 },
-      raphaelUp: { prefix: "raphaelUp", frames: 34 },
-      dragonAnimation: { prefix: "dragon", frames: 7 },
-      fireballAnimation: { prefix: "fireball", frames: 6 },
-      dragonAttack: { prefix: "dragonAttack", frames: 11 },
-      dragonFireball: { prefix: "dragonFireball", frames: 6 },
-    };
-
-    Object.entries(ANIMATIONS).forEach(([key, cfg]) => {
-      const frames = [];
-      for (let i = 1; i <= cfg.frames; i++) {
-        frames.push({ key: `${cfg.prefix}${i}` });
-      }
-      this.anims.create({
-        key,
-        frames,
-        frameRate: cfg.fps ?? 12,
-        repeat: -1,
-      });
-    });
   }
 
   addBackground() {
@@ -166,11 +115,11 @@ export default class Game extends Phaser.Scene {
       .setScale(0.25)
       .setDepth(5);
     this.player.body
-      .setSize(this.player.width * 0.4, this.player.height * 0.8)
+      .setCircle(this.player.width / 5)
       .setOffset(
         this.player.width * 1 -
           this.player.width * this.currentAngel ** 2 * 0.14,
-        this.player.height * 0.3,
+        this.player.height * 0.5,
       );
 
     this.player.speed = 300;
@@ -693,7 +642,7 @@ export default class Game extends Phaser.Scene {
 
   checkPlayerLost() {
     if (this.player && !this.player.lost) {
-      if (this.player.y > 1200 || this.player.y < 0) {
+      if (this.player.y > 1350 || this.player.y < 0) {
         this.player.lost = true;
         this.player.setVelocity(0, 0);
         this.player.body.setGravityY(0);

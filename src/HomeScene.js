@@ -32,6 +32,7 @@ export default class HomeScene extends Phaser.Scene {
   configure() {
     this.screen = "home";
     this.charecterSelectionDone = false;
+    this.isBgTransitioning = false;
     this.score = localStorage.getItem("setScore");
     if (this.score === null) {
       this.score = 0;
@@ -62,34 +63,138 @@ export default class HomeScene extends Phaser.Scene {
 
   createAnimations() {
     const ANIMATIONS = {
-      birdAnimation: { prefix: "b", frames: 2, fps: 15 },
-      a1Animation: { prefix: "a1", frames: 25 },
-      a2Animation: { prefix: "a2", frames: 28 },
-      a3Animation: { prefix: "a3", frames: 20 },
-      cloudAttack: { prefix: "cloudAttack", frames: 14 },
-      cloudReposo: { prefix: "cloudReposo", frames: 25 },
-      dove: { prefix: "dove", frames: 5 },
-      heart: { prefix: "heart", frames: 25 },
-      minotaurWalking: { prefix: "minotaurWalking", frames: 14 },
-      minotaurSmashing: { prefix: "minotaurSmashing", frames: 14 },
-      michaelAttack: { prefix: "michaelAttack", frames: 12 },
-      michaelDown: { prefix: "michaelDown", frames: 30 },
-      michaelLeft: { prefix: "michaelLeft", frames: 30 },
-      michaelRepose: { prefix: "michaelRepose", frames: 26 },
-      michaelRight: { prefix: "michaelRight", frames: 22 },
-      michaelUp: { prefix: "michaelUp", frames: 36 },
-      gabrielAttack: { prefix: "gabrielAttack", frames: 17 },
-      gabrielDown: { prefix: "gabrielDown", frames: 27 },
-      gabrielLeft: { prefix: "gabrielLeft", frames: 29 },
-      gabrielRepose: { prefix: "gabrielRepose", frames: 30 },
-      gabrielRight: { prefix: "gabrielRight", frames: 29 },
-      gabrielUp: { prefix: "gabrielUp", frames: 32 },
-      raphaelAttack: { prefix: "raphaelAttack", frames: 23 },
-      raphaelDown: { prefix: "raphaelDown", frames: 27 },
-      raphaelLeft: { prefix: "raphaelLeft", frames: 29 },
-      raphaelRepose: { prefix: "raphaelRepose", frames: 26 },
-      raphaelRight: { prefix: "raphaelRight", frames: 29 },
-      raphaelUp: { prefix: "raphaelUp", frames: 34 },
+      birdAnimation: { prefix: "b", frames: 2, fps: 15, repeat: -1 },
+      a1Animation: { prefix: "a1", frames: 25, fps: 12, repeat: -1 },
+      a2Animation: { prefix: "a2", frames: 28, fps: 12, repeat: -1 },
+      a3Animation: { prefix: "a3", frames: 20, fps: 12, repeat: -1 },
+      cloudAttack: {
+        prefix: "cloudAttack",
+        frames: 14,
+        fps: 12,
+        repeat: 0,
+      },
+      cloudReposo: {
+        prefix: "cloudReposo",
+        frames: 25,
+        fps: 12,
+        repeat: -1,
+      },
+      dove: { prefix: "dove", frames: 5, fps: 12, repeat: -1 },
+      heart: { prefix: "heart", frames: 25, fps: 12, repeat: 0 },
+      minotaurWalking: {
+        prefix: "minotaurWalking",
+        frames: 14,
+        fps: 12,
+        repeat: -1,
+      },
+      minotaurSmashing: {
+        prefix: "minotaurSmashing",
+        frames: 14,
+        fps: 12,
+        repeat: 0,
+      },
+      michaelAttack: {
+        prefix: "michaelAttack",
+        frames: 12,
+        fps: 12,
+        repeat: -1,
+      },
+      michaelDown: {
+        prefix: "michaelDown",
+        frames: 30,
+        fps: 12,
+        repeat: -1,
+      },
+      michaelLeft: {
+        prefix: "michaelLeft",
+        frames: 30,
+        fps: 12,
+        repeat: -1,
+      },
+      michaelRepose: {
+        prefix: "michaelRepose",
+        frames: 26,
+        fps: 12,
+        repeat: -1,
+      },
+      michaelRight: {
+        prefix: "michaelRight",
+        frames: 22,
+        fps: 12,
+        repeat: -1,
+      },
+      michaelUp: { prefix: "michaelUp", frames: 36, fps: 12, repeat: 0 },
+      gabrielAttack: {
+        prefix: "gabrielAttack",
+        frames: 17,
+        fps: 12,
+        repeat: -1,
+      },
+      gabrielDown: {
+        prefix: "gabrielDown",
+        frames: 27,
+        fps: 12,
+        repeat: -1,
+      },
+      gabrielLeft: {
+        prefix: "gabrielLeft",
+        frames: 29,
+        fps: 12,
+        repeat: -1,
+      },
+      gabrielRepose: {
+        prefix: "gabrielRepose",
+        frames: 30,
+        fps: 12,
+        repeat: -1,
+      },
+      gabrielRight: {
+        prefix: "gabrielRight",
+        frames: 29,
+        fps: 12,
+        repeat: -1,
+      },
+      gabrielUp: { prefix: "gabrielUp", frames: 32, fps: 12, repeat: 0 },
+      raphaelAttack: {
+        prefix: "raphaelAttack",
+        frames: 23,
+        fps: 12,
+        repeat: -1,
+      },
+      raphaelDown: {
+        prefix: "raphaelDown",
+        frames: 27,
+        fps: 12,
+        repeat: -1,
+      },
+      raphaelLeft: {
+        prefix: "raphaelLeft",
+        frames: 29,
+        fps: 12,
+        repeat: -1,
+      },
+      raphaelRepose: {
+        prefix: "raphaelRepose",
+        frames: 26,
+        fps: 12,
+        repeat: -1,
+      },
+      raphaelRight: {
+        prefix: "raphaelRight",
+        frames: 29,
+        fps: 12,
+        repeat: -1,
+      },
+      raphaelUp: { prefix: "raphaelUp", frames: 34, fps: 12, repeat: -1 },
+      dragonAnimation: { prefix: "dragon", frames: 7, fps: 12, repeat: -1 },
+      fireballAnimation: { prefix: "fireball", frames: 6, fps: 12, repeat: -1 },
+      dragonAttack: { prefix: "dragonAttack", frames: 11, fps: 12, repeat: -1 },
+      dragonFireball: {
+        prefix: "dragonFireball",
+        frames: 6,
+        fps: 12,
+        repeat: -1,
+      },
     };
 
     Object.entries(ANIMATIONS).forEach(([key, cfg]) => {
@@ -100,8 +205,8 @@ export default class HomeScene extends Phaser.Scene {
       this.anims.create({
         key,
         frames,
-        frameRate: cfg.fps ?? 12,
-        repeat: -1,
+        frameRate: cfg.fps,
+        repeat: cfg.repeat,
       });
     });
   }
@@ -195,39 +300,72 @@ export default class HomeScene extends Phaser.Scene {
   }
 
   selectBackground(index) {
-    // Update selection
-    this.currentBgIndex = index;
+    if (this.isBgTransitioning) return;
+    if (index === this.currentBgIndex) return;
+
+    this.isBgTransitioning = true;
+
     const selectedBg = this.backgrounds[index];
-    this.selectedBackground = selectedBg.key;
+    const newKey = selectedBg.key;
+    const direction = index > this.currentBgIndex ? 1 : -1; // 1: new from right, -1: new from left
 
-    // Save to localStorage
-    localStorage.setItem("selectedBackground", selectedBg.key);
+    // Create new background sprite off-screen
+    const startX = 400 + 800 * direction;
+    const newBg = this.add
+      .tileSprite(startX, 700, 800, 1400, newKey)
+      .setDepth(3) // Above old bg
+      .setAlpha(0);
 
-    // Update borders
-    const thumbWidth = 80;
-    const thumbHeight = 80;
-    const startX = 100;
-    const spacing = 100;
-    const selectorY = 1220;
-
-    this.bgBorders.forEach((border, i) => {
-      border.clear();
-      if (i === index) {
-        border.lineStyle(3, 0xffd700, 1);
-        border.strokeRoundedRect(
-          startX + i * spacing - thumbWidth / 2 - 3,
-          selectorY + 50 - thumbHeight / 2 - 3,
-          thumbWidth + 6,
-          thumbHeight + 6,
-          5,
-        );
-      }
+    // Animate old bg out
+    this.tweens.add({
+      targets: this.gameBg,
+      x: `-=${800 * direction}`,
+      alpha: 0,
+      duration: 500,
+      ease: "Power2",
     });
 
-    // Update background in home scene
-    if (this.gameBg) {
-      this.gameBg.setTexture(selectedBg.key);
-    }
+    // Animate new bg in
+    this.tweens.add({
+      targets: newBg,
+      x: 400,
+      alpha: 0.7,
+      duration: 500,
+      ease: "Power2",
+      onComplete: () => {
+        // Replace old with new
+        this.gameBg.destroy();
+        this.gameBg = newBg;
+        this.gameBg.setDepth(2); // Reset depth
+        this.selectedBackground = newKey;
+        this.currentBgIndex = index;
+
+        // Save and update UI
+        localStorage.setItem("selectedBackground", newKey);
+
+        const thumbWidth = 80;
+        const thumbHeight = 80;
+        const startX = 100;
+        const spacing = 100;
+        const selectorY = 1220;
+
+        this.bgBorders.forEach((border, i) => {
+          border.clear();
+          if (i === index) {
+            border.lineStyle(3, 0xffd700, 1);
+            border.strokeRoundedRect(
+              startX + i * spacing - thumbWidth / 2 - 3,
+              selectorY + 50 - thumbHeight / 2 - 3,
+              thumbWidth + 6,
+              thumbHeight + 6,
+              5,
+            );
+          }
+        });
+
+        this.isBgTransitioning = false;
+      },
+    });
   }
 
   addSounds() {
@@ -267,6 +405,18 @@ export default class HomeScene extends Phaser.Scene {
       .setDepth(4);
     this.playerImg.play(this.angelAnimations[this.currentAngel]);
 
+    this.particles = this.add.particles(400, 600, "particle", {
+      x: 0,
+      y: 0,
+      speed: { min: 3, max: 8 },
+      angle: { min: 0, max: 180 },
+      alpha: { start: 1, end: 0.2 },
+      scale: { start: 0.3, end: 2.5 },
+      lifespan: 1300,
+      frequency: 80,
+      blendMode: "ADD",
+    });
+
     this.nameText = this.add
       .text(
         this.playerImg.x,
@@ -276,7 +426,7 @@ export default class HomeScene extends Phaser.Scene {
           fontFamily: "MyLocalFont",
           fontSize: "60px",
           color: "#ffffff",
-          stroke: "#000000",
+          stroke: "#758500",
           strokeThickness: 5,
         },
       )
@@ -295,7 +445,7 @@ export default class HomeScene extends Phaser.Scene {
     this.title = this.physics.add
       .sprite(400, 200, "title")
       .setScale(1.15)
-      .setDepth(2);
+      .setDepth(5);
 
     this.leftArrow = this.add
       .text(50, 580, "<", {
@@ -329,7 +479,7 @@ export default class HomeScene extends Phaser.Scene {
       if (this.currentAngel < 0) this.currentAngel = this.angels.length - 1;
       this.arrowVisibility();
       this.tweens.add({
-        targets: [this.playerImg, this.nameText],
+        targets: [this.playerImg, this.nameText, this.particles],
         x: "+=150",
         alpha: 0,
         duration: 200,
@@ -340,8 +490,9 @@ export default class HomeScene extends Phaser.Scene {
           this.nameText.setText(this.angelNames[this.currentAngel]);
           this.playerImg.x -= 300;
           this.nameText.x -= 300;
+          this.particles.x -= 300;
           this.tweens.add({
-            targets: [this.playerImg, this.nameText],
+            targets: [this.playerImg, this.nameText, this.particles],
             x: 400,
             alpha: 1,
             duration: 300,
@@ -356,7 +507,7 @@ export default class HomeScene extends Phaser.Scene {
       if (this.currentAngel >= this.angels.length) this.currentAngel = 0;
       this.arrowVisibility();
       this.tweens.add({
-        targets: [this.playerImg, this.nameText],
+        targets: [this.playerImg, this.nameText, this.particles],
         x: "-=150",
         alpha: 0,
         duration: 200,
@@ -367,8 +518,9 @@ export default class HomeScene extends Phaser.Scene {
           this.nameText.setText(this.angelNames[this.currentAngel]);
           this.playerImg.x += 300;
           this.nameText.x += 300;
+          this.particles.x += 300;
           this.tweens.add({
-            targets: [this.playerImg, this.nameText],
+            targets: [this.playerImg, this.nameText, this.particles],
             x: 400,
             alpha: 1,
             duration: 300,
@@ -382,8 +534,8 @@ export default class HomeScene extends Phaser.Scene {
       this.playText = this.add
         .image(400, 1000, "playBtn")
         .setOrigin(0.5)
-        .setDepth(2)
-        .setScale(1.2)
+        .setDepth(5)
+        .setScale(1)
         .setInteractive({ useHandCursor: true });
 
       this.playText.on("pointerdown", () => {
@@ -411,7 +563,7 @@ export default class HomeScene extends Phaser.Scene {
     this.option1 = this.add
       .image(400, 1100, "goToLeaderboard")
       .setDepth(5)
-      .setScale(0.7)
+      .setScale(0.6)
       .setInteractive();
 
     this.option1.on("pointerdown", () => {

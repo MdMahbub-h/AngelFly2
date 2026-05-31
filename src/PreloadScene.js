@@ -6,9 +6,9 @@ export default class PreloadScene extends Phaser.Scene {
   preload() {
     // Show loading text
     this.add
-      .text(400, 680, "Loading...", {
+      .text(400, 800, "Loading...", {
         fontFamily: "MyLocalFont",
-        fontSize: "50px",
+        fontSize: "36px",
         color: "#ffffff",
         stroke: "#000000",
         strokeThickness: 4,
@@ -16,19 +16,22 @@ export default class PreloadScene extends Phaser.Scene {
       .setOrigin(0.5);
 
     // Create loading bar background
-    const barWidth = 500;
-    const barHeight = 50;
+    const barWidth = 450;
+    const barHeight = 35;
     const barX = (800 - barWidth) / 2;
-    const barY = 730;
+    const barY = 840;
 
     // Background bar
     this.loadingBarBg = this.add.graphics();
     this.loadingBarBg.fillStyle(0x222222, 1);
     this.loadingBarBg.fillRoundedRect(barX, barY, barWidth, barHeight, 10);
+
     // Stroke border
-    this.loadingBarBg.lineStyle(4, 0xffffff, 1);
-    this.loadingBarBg.strokeRoundedRect(barX, barY, barWidth, barHeight, 10);
-    this.loadingBarBg.setDepth(1);
+
+    this.loadingBarBg2 = this.add.graphics();
+    this.loadingBarBg2.lineStyle(4, 0xffffff, 1);
+    this.loadingBarBg2.strokeRoundedRect(barX, barY, barWidth, barHeight, 10);
+    this.loadingBarBg2.setDepth(4);
 
     // Progress bar (initially width 0)
     this.loadingBar = this.add.graphics();
@@ -57,7 +60,7 @@ export default class PreloadScene extends Phaser.Scene {
         barY + 2,
         barWidth * value - 4,
         barHeight - 4,
-        10,
+        8,
       );
     });
 
@@ -97,6 +100,10 @@ export default class PreloadScene extends Phaser.Scene {
       leaderboardIcon: "assets/UI/leaderboard-icon.png",
       restart: "assets/flappyBird/restart.png",
       title: "assets/flappyBird/title.png",
+      yourScore: "assets/flappyBird/yourScore.png",
+      highScore: "assets/flappyBird/highScore.png",
+      or: "assets/flappyBird/or.png",
+      particle: "assets/flappyBird/particles.png",
       playBtn: "assets/UI/playBtn.png",
     };
 
@@ -136,6 +143,7 @@ export default class PreloadScene extends Phaser.Scene {
     for (let i = 1; i <= 14; i++) {
       imageSources[`minotaurWalking${i}`] =
         `assets/angel/walkingMinotaur/a_(${i}).png`;
+      // walkingMinotaur
     }
     for (let i = 1; i <= 14; i++) {
       imageSources[`minotaurSmashing${i}`] =
